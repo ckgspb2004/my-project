@@ -12,19 +12,17 @@ body {
     justify-content: center;
     align-items: center;
     background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', sans-serif;
     color: white;
     overflow: hidden;
     transition: background 1.5s ease;
 }
 
-/* Заголовок с вайбом успеха */
 h1 {
-    text-shadow: 0 0 10px white;
-    transition: text-shadow 0.3s ease;
+    transition: text-shadow 0.5s ease;
+    text-shadow: 0 0 10px white; /* То самое свечение, которое мы хотели */
 }
 
-/* Эффект стекла для карточки */
 .card {
     background: var(--card-bg);
     backdrop-filter: blur(15px);
@@ -36,7 +34,16 @@ h1 {
     transition: transform 0.2s ease;
 }
 
-/* Кнопка */
+/* Анимация пульсации (дыхания) */
+.breathing {
+    animation: breathe 3s infinite ease-in-out;
+}
+
+@keyframes breathe {
+    0%, 100% { box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); transform: scale(1); }
+    50% { box-shadow: 0 8px 45px 5px rgba(251, 191, 36, 0.2); transform: scale(1.02); }
+}
+
 button {
     background: transparent;
     border: 2px solid var(--neon-green);
@@ -48,7 +55,6 @@ button {
     cursor: pointer;
     text-transform: uppercase;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(34, 197, 94, 0.3);
 }
 
 button:hover {
@@ -57,14 +63,12 @@ button:hover {
     box-shadow: 0 0 20px var(--neon-green);
 }
 
-/* Золотая кнопка после 10 клика */
 button.gold-mode {
-    border-color: var(--gold);
-    color: var(--gold);
-    box-shadow: 0 0 20px var(--gold);
+    border-color: var(--gold) !important;
+    color: var(--gold) !important;
+    box-shadow: 0 0 30px var(--gold) !important;
 }
 
-/* Всплывающее "ЛЕГЕНДАРНО" */
 #legendary-overlay {
     position: fixed;
     font-size: 5rem;
