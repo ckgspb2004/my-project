@@ -3,6 +3,7 @@ const button = document.getElementById('mainButton');
 const counterText = document.getElementById('counter');
 const overlay = document.getElementById('legendary-overlay');
 
+// Plays a click sound using a synthesizer (Web Audio API)
 // Функция звука клика (синтезатор)
 function playSound() {
     const ctx = new (window.AudioContext || window.webkitAudioContext)();
