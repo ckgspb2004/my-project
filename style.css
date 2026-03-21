@@ -18,6 +18,12 @@ body {
     transition: background 1.5s ease;
 }
 
+/* Заголовок с вайбом успеха */
+h1 {
+    text-shadow: 0 0 10px white;
+    transition: text-shadow 0.3s ease;
+}
+
 /* Эффект стекла для карточки */
 .card {
     background: var(--card-bg);
