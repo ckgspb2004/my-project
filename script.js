@@ -1,50 +1,48 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const counterDisplay = document.getElementById('counter');
-    const btn = document.getElementById('neon-button');
-    const card = document.querySelector('.card');
-    const body = document.body;
-    let count = 0;
+let count = 0;
+const button = document.getElementById('mainButton');
+const counterText = document.getElementById('counter');
+const overlay = document.getElementById('legendary-overlay');
 
-    // Инициализация AudioContext для звука клика
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+// Функция звука клика (синтезатор)
+function playSound() {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.1);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + 0.1);
+}
 
-    const playClickSound = () => {
-        const oscillator = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-
-        oscillator.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        oscillator.type = 'sine';
-        oscillator.frequency.setValueAtTime(880, audioCtx.currentTime); // Высокий тон (ля второй октавы)
-        
-        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-
-        oscillator.start();
-        oscillator.stop(audioCtx.currentTime + 0.1);
-    };
-
-    btn.addEventListener('click', () => {
+button.addEventListener('click', () => {
+    try {
         count++;
-        counterDisplay.innerText = `Кликов: ${count}`;
-        
-        // Проигрываем звук
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume();
+        counterText.innerText = `Кликов: ${count}`;
+        playSound();
+
+        // Проверка на 10 кликов
+        if (count === 10) {
+            triggerLegendary();
         }
-        playClickSound();
-
-        // Активация режима концентрации (фон темнеет, карточка дышит)
-        body.classList.add('concentration-mode');
-        card.classList.add('breathing');
-        
-        // Анимация карточки (эффект нажатия)
-        card.classList.add('active');
-        setTimeout(() => {
-            card.classList.remove('active');
-        }, 300);
-
-        console.log(`Количество кликов: ${count}`);
-    });
+    } catch (e) {
+        console.error("Ошибка вайбкодинга:", e);
+    }
 });
+
+function triggerLegendary() {
+    // Показываем надпись
+    overlay.classList.remove('hidden');
+    setTimeout(() => overlay.classList.add('show'), 10);
+    
+    // Красим кнопку в золото
+    button.classList.add('gold-mode');
+    
+    // Убираем надпись через 1.5 секунды
+    setTimeout(() => {
+        overlay.classList.remove('show');
+        setTimeout(() => overlay.classList.add('hidden'), 500);
+    }, 1500);
+}
