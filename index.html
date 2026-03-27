@@ -3,13 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern Test Screen</title>
+    <title>Mika Camamoni - Детская одежда и аксессуары</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <button id="test-button" class="neon-button">Тест за 100$</button>
+    <header class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <h1>Mika Camamoni</h1>
+                    <span class="slogan">Стильная одежда для ваших красавчиков</span>
+                </div>
+                <div class="header-contacts">
+                    <div class="contact-item">
+                        <span class="icon-phone"></span>
+                        <a href="tel:+7(495)123-45-67">+7(495)123-45-67</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="icon-whatsapp"></span>
+                        <a href="https://wa.me/79991234567">Натик в WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Главная</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="contacts.html">Контакты</a></li>
+                    <li><a href="blog.html">Акции</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Стильная одежда для ваших красавчиков</h2>
+                    <p>Высокое качество по доступным ценам</p>
+                    <div class="hero-buttons">
+                        <a href="catalog.html" class="btn btn-primary">Купить сейчас</a>
+                        <a href="#catalog" class="btn btn-secondary">Посмотреть каталог</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="search-section">
+            <div class="container">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Найти товар по названию или артикулу...">
+                    <button id="search-btn" class="btn-search">Найти</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-products" id="catalog">
+            <div class="container">
+                <h2>Популярные товары</h2>
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://picsum.photos/seed/product1/300/300.jpg" alt="Косынка для новрожденных">
+                            <span class="badge new">Новинка</span>
+                        </div>
+                        <div class="product-info">
+                            <h3>Косынка для новрожденных</h3>
+                            <div class="product-price">
+                                <span class="price">3 990₽</span>
+                                <span class="old-price">5 990₽</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-add-to-cart" data-product-id="1">В корзину</button>
+                                <button class="btn btn-quick-view" data-product-id="1">Быстрый просмотр</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://picsum.photos/seed/product2/300/300.jpg" alt="Костюм для мальчиков">
+                            <span class="badge sale">Скидка</span>
+                        </div>
+                        <div class="product-info">
+                            <h3>Костюм для мальчиков</h3>
+                            <div class="product-price">
+                                <span class="price">2 490₽</span>
+                                <span class="old-price">3 990₽</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-add-to-cart" data-product-id="2">В корзину</button>
+                                <button class="btn btn-quick-view" data-product-id="2">Быстрый просмотр</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://picsum.photos/seed/product3/300/300.jpg" alt="Полоска для пола">
+                            <span class="badge hot">Лучший хит</span>
+                        </div>
+                        <div class="product-info">
+                            <h3>Полоска для пола</h3>
+                            <div class="product-price">
+                                <span class="price">1 990₽</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-add-to-cart" data-product-id="3">В корзину</button>
+                                <button class="btn btn-quick-view" data-product-id="3">Быстрый просмотр</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="https://picsum.photos/seed/product4/300/300.jpg" alt="Коронка для прогулок">
+                        </div>
+                        <div class="product-info">
+                            <h3>Коронка для прогулок</h3>
+                            <div class="product-price">
+                                <span class="price">1 290₽</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-add-to-cart" data-product-id="4">В корзину</button>
+                                <button class="btn btn-quick-view" data-product-id="4">Быстрый просмотр</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="advantages">
+            <div class="container">
+                <h2>Почему выбирают именно Mika Camamoni</h2>
+                <div class="advantages-grid">
+                    <div class="advantage-item">
+                        <span class="icon-check"></span>
+                        <h3>Высокое качество</h3>
+                        <p>Только лучшие материалы для ваших красавчиков</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="icon-shipping"></span>
+                        <h3>Быстрая доставка</h3>
+                        <p>Доставка по России за 3-5 дней</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="icon-return"></span>
+                        <h3>Гарантия</h3>
+                        <p>14 дней на возврат товара</p>
+                    </div>
+                    <div class="advantage-item">
+                        <span class="icon-support"></span>
+                        <h3>Консультация 24/7</h3>
+                        <p>Наша команда всегда на связи</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="newsletter">
+            <div class="container">
+                <h2>Следите за акциями</h2>
+                <p>Получайте скидки до 30% на первый заказ</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Ваш email" required>
+                    <button type="submit" class="btn btn-primary">Подписаться</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Mika Camamoni</h3>
+                    <p>Детская одежда и аксессуары</p>
+                    <div class="social-links">
+                        <a href="#" class="icon-facebook"></a>
+                        <a href="#" class="icon-instagram"></a>
+                        <a href="#" class="icon-vk"></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Каталог</h4>
+                    <ul>
+                        <li><a href="#">Новорожденные</a></li>
+                        <li><a href="#">Мальчики</a></li>
+                        <li><a href="#">Девочки</a></li>
+                        <li><a href="#">Аксессуары</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Информация</h4>
+                    <ul>
+                        <li><a href="contacts.html">Контакты</a></li>
+                        <li><a href="blog.html">Акции</a></li>
+                        <li><a href="#">Оптовая связь</a></li>
+                        <li><a href="#">Карта стирить</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Контакты</h4>
+                    <div class="contact-info">
+                        <p>Город: Москва</p>
+                        <p>Телефон: +7(495)123-45-67</p>
+                        <p>Электронная почта: info@mikacamamoni.ru</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mika Camamoni. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="quick-view-modal">
+            <span class="close-modal">&times;</span>
+            <div class="modal-content">
+                <div class="modal-image">
+                    <img src="https://picsum.photos/seed/product1/400/400.jpg" alt="Продукт">
+                </div>
+                <div class="modal-info">
+                    <h3 id="modal-product-name">Косынка для новрожденных</h3>
+                    <div class="modal-price">
+                        <span id="modal-product-price">3 990₽</span>
+                        <span id="modal-product-old-price" class="old-price">5 990₽</span>
+                    </div>
+                    <p id="modal-product-description">Удобная косынка для вашего новрожденного ребенка.</p>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary" id="add-to-cart-modal">В корзину</button>
+                        <button class="btn btn-secondary" id="close-modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Корзина</h3>
+                <span class="close-cart">&times;</span>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <p class="empty-cart">Корзина пуста</p>
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Итого:</span>
+                    <span id="cart-total">0₽</span>
+                </div>
+                <button class="btn btn-primary" id="checkout-btn">Оформить заказ</button>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>

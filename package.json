@@ -1,0 +1,27 @@
+{
+  "name": "my-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "npx tailwindcss build ./src/css/tailwind.css -o ./dist/css/tailwind.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ckgspb2004/my-project.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ckgspb2004/my-project/issues"
+  },
+  "homepage": "https://github.com/ckgspb2004/my-project#readme",
+  "dependencies": {
+    "autoprefixer": "^10.4.27",
+    "postcss": "^8.5.8",
+    "tailwindcss": "^4.2.2"
+  }
+}
