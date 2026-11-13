@@ -1,0 +1,120 @@
+name: Actions storage housekeeping
+on:
+  push:
+    paths:
+      - .github/workflows/actions-storage-housekeeping.yml
+  workflow_dispatch:
+  schedule:
+    - cron: '35 4 * * 0'
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: actions-storage-housekeeping
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Remove old Actions artifacts and run logs
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import datetime
+          import json
+          import os
+          import sys
+          import time
+          import urllib.error
+          import urllib.request
+
+          repo = os.environ["GH_REPO"]
+          token = os.environ["GH_TOKEN"]
+          root = "https://api.github.com/repos/" + repo
+          now = datetime.datetime.now(datetime.timezone.utc)
+          artifacts_before = now - datetime.timedelta(days=7)
+          runs_before = now - datetime.timedelta(days=30)
+          max_artifact_deletes = 300
+          max_run_deletes = 180
+
+          def request(path, method="GET"):
+              url = root + path
+              req = urllib.request.Request(
+                  url,
+                  method=method,
+                  headers={
+                      "Authorization": "Bearer " + token,
+                      "Accept": "application/vnd.github+json",
+                      "X-GitHub-Api-Version": "2022-11-28",
+                      "User-Agent": "Actions-storage-housekeeping",
+                  },
+              )
+              with urllib.request.urlopen(req, timeout=30) as response:
+                  raw = response.read()
+                  return json.loads(raw) if raw else None
+
+          def parsed(value):
+              return datetime.datetime.fromisoformat(value.replace("Z", "+00:00"))
+
+          eligible_artifacts = []
+          for page in range(1, 101):
+              response = request("/actions/artifacts?per_page=100&page=" + str(page))
+              items = response.get("artifacts", [])
+              for item in items:
+                  if item.get("expired") or parsed(item["created_at"]) < artifacts_before:
+                      eligible_artifacts.append(item)
+              if len(items) < 100:
+                  break
+
+          eligible_artifacts.sort(key=lambda a: a["created_at"])
+          artifact_bytes = 0
+          removed_artifacts = 0
+          for item in eligible_artifacts[:max_artifact_deletes]:
+              request("/actions/artifacts/" + str(item["id"]), "DELETE")
+              removed_artifacts += 1
+              artifact_bytes += int(item.get("size_in_bytes") or 0)
+
+          eligible_runs = []
+          for page in range(1, 101):
+              response = request("/actions/runs?per_page=100&page=" + str(page))
+              items = response.get("workflow_runs", [])
+              for item in items:
+                  if (
+                      item.get("status") == "completed"
+                      and parsed(item["created_at"]) < runs_before
+                      and item["id"] != int(os.environ["GITHUB_RUN_ID"])
+                  ):
+                      eligible_runs.append(item)
+              if len(items) < 100:
+                  break
+
+          eligible_runs.sort(key=lambda r: r["created_at"])
+          removed_runs = 0
+          for item in eligible_runs[:max_run_deletes]:
+              request("/actions/runs/" + str(item["id"]), "DELETE")
+              removed_runs += 1
+
+          lines = [
+              "Repository: " + repo,
+              "Artifacts older than 7 days deleted: " + str(removed_artifacts),
+              "Artifact bytes deleted: " + str(artifact_bytes),
+              "Completed workflow runs older than 30 days deleted: " + str(removed_runs),
+              "Remaining eligible artifacts (snapshot): " + str(max(0, len(eligible_artifacts) - removed_artifacts)),
+              "Remaining eligible runs (snapshot): " + str(max(0, len(eligible_runs) - removed_runs)),
+              "Source code, repository files and external backups untouched.",
+          ]
+          report = "\n".join(lines)
+          print(report)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as fp:
+              fp.write("## Actions housekeeping\n\n")
+              for line in lines:
+                  fp.write("- " + line + "\n")
+          PY
